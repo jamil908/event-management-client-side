@@ -5,92 +5,89 @@ import { FaGoogle } from 'react-icons/fa';
 import { AuthContext } from '../../Providers/AuthProvider';
 
 const Login = () => {
-    const {signIn,googleSignIn}=useContext(AuthContext)
+    const { signIn, googleSignIn } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
   
     const handleGoogleLogin = () => {
-      googleSignIn()
-          .then((result) => {
-              const user = result.user;
-              Swal.fire({
-                  title: 'Google Login Successful!',
-                  icon: 'success',
-              });
-              navigate(from, { replace: true });
-          })
-          .catch((error) => {
-              console.error(error.message);
-              Swal.fire({
-                  title: 'Error!',
-                  text: error.message,
-                  icon: 'error',
-              });
-          });
-  };
-    const handleLogin = e =>{
-        e.preventDefault();
-        const form = e.target;
-        const email = form.email.value;
-        const password = form.password.value;
-        console.log(email,password)
-        signIn(email,password)
-        .then(result =>{
-            const user = result.user;
-            Swal.fire({
-              title: "login successful",
-              showClass: {
-                popup: `
-                  animate__animated
-                  animate__fadeInUp
-                  animate__faster
-                `
-              },
-              hideClass: {
-                popup: `
-                  animate__animated
-                  animate__fadeOutDown
-                  animate__faster
-                `
-              }
+        googleSignIn()
+            .then((result) => {
+                Swal.fire({
+                    title: 'Google Login Successful!',
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false,
+                });
+                navigate(from, { replace: true });
+            })
+            .catch((error) => {
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message,
+                    icon: 'error',
+                });
             });
-            navigate(from,{replace: true})
-        })
-    }
-    return (
-        <div className="hero bg-base-200 min-h-screen">
-  <div className="hero-content flex-col lg:flex-row-reverse">
-    <div className="text-center lg:text-left">
-      <h1 className="text-5xl font-bold">Login now!</h1>
-    </div>
-    <div className="card bg-base-100  shrink-0 shadow-2xl">
-      <form onSubmit={handleLogin} className="card-body">
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Email</span>
-          </label>
-          <input type="email" name='email' placeholder="email" className="input input-bordered" required />
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Password</span>
-          </label>
-          <input type="password" name='password' placeholder="password" className="input input-bordered" required />
-          <label className="label">
-            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-          </label>
-        </div>
-        <div className="form-control mt-3">
-          <button className="btn btn-primary"> Login</button>
-        </div>
-      </form>
-      <div><button onClick={handleGoogleLogin} className='flex btn '><FaGoogle></FaGoogle>login with google</button></div>
+    };
 
-      <p className=' mb-3 ml-5'><small>New Here?<Link to='/signup'>Create an account</Link></small></p>
-    </div>
-  </div>
-</div>
+    const handleLogin = (e) => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+
+        signIn(email, password)
+            .then(() => {
+                Swal.fire({
+                    title: 'Login Successful!',
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false,
+                });
+                navigate(from, { replace: true });
+            })
+            .catch((error) => {
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message,
+                    icon: 'error',
+                });
+            });
+    };
+
+    return (
+        <div className="min-h-screen flex items-center pt-20 justify-center  p-6">
+            <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl rounded-xl">
+                <h1 className="text-3xl font-bold text-center text-gray-700">Welcome Back!</h1>
+                <form onSubmit={handleLogin} className="space-y-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" name='email' placeholder="Enter your email" className="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" required />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" name='password' placeholder="Enter your password" className="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" required />
+                    </div>
+                    <div className="text-right">
+                        <a href="#" className="text-sm text-blue-600 hover:underline">Forgot password?</a>
+                    </div>
+                    <button className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg shadow-md hover:bg-blue-700 transition">Login</button>
+                </form>
+                <div className="relative mt-4">
+                    <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t"></div>
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                        <span className="bg-white px-2 text-gray-500">Or</span>
+                    </div>
+                </div>
+                <button onClick={handleGoogleLogin} className='w-full flex items-center justify-center gap-2 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition'>
+                    <FaGoogle className='text-lg' /> Login with Google
+                </button>
+                <p className='text-center text-sm text-gray-600 mt-4'>
+                    New Here? <Link to='/register' className='text-blue-600 hover:underline'>Create an account</Link>
+                </p>
+            </div>
+        </div>
     );
 };
 

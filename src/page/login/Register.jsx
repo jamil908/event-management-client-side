@@ -1,6 +1,3 @@
-
-
-
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { imageUpload } from "../../hooks/utilities/utils";
@@ -11,7 +8,7 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const Register = () => {
-  const { createUser, updateUserProfile, googleSignIn } = useContext(AuthContext)
+  const { createUser, updateUserProfile, googleSignIn } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,25 +25,14 @@ const Register = () => {
     const image = data.file[0];
     try {
       const photoURL = await imageUpload(image);
-      const result = await createUser(data.email, data.password);
-      const loggedUser = result.user;
-
-      // Update user profile
+      await createUser(data.email, data.password);
       await updateUserProfile(data.name, photoURL);
       Swal.fire({
         title: "Sign Up Successful!",
         icon: "success",
-        showClass: {
-          popup: "animate__animated animate__fadeInUp animate__faster",
-        },
-        hideClass: {
-          popup: "animate__animated animate__fadeOutDown animate__faster",
-        },
       });
-
       navigate("/");
     } catch (error) {
-      console.error(error.message);
       Swal.fire({
         title: "Error!",
         text: error.message,
@@ -60,124 +46,81 @@ const Register = () => {
   const handleGoogleLogin = () => {
     setLoading(true);
     googleSignIn()
-      .then((result) => {
-        Swal.fire({
-          title: "Google Login Successful!",
-          icon: "success",
-        });
+      .then(() => {
+        Swal.fire({ title: "Google Login Successful!", icon: "success" });
         navigate(from, { replace: true });
       })
       .catch((error) => {
-        console.error(error.message);
-        Swal.fire({
-          title: "Error!",
-          text: error.message,
-          icon: "error",
-        });
+        Swal.fire({ title: "Error!", text: error.message, icon: "error" });
       })
       .finally(() => setLoading(false));
   };
 
   return (
-    <div className="hero bg-base-200 min-h-screen">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Sign Up now!</h1>
-        </div>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Name</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Name"
-                name="name"
-                aria-label="Enter your name"
-                {...register("name", { required: true })}
-                className="input input-bordered"
-              />
-              {errors.name && <span className="text-red-600">This field is required</span>}
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                placeholder="Email"
-                {...register("email", { required: true })}
-                className="input input-bordered"
-              />
-              {errors.email && <span className="text-red-600">This field is required</span>}
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                placeholder="Password"
-                {...register("password", {
-                  required: true,
-                  minLength: 6,
-                  maxLength: 20,
-                  pattern:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,20}$/,
-                })}
-                className="input input-bordered"
-              />
-              {errors.password?.type === "required" && (
-                <span className="text-red-600">This field is required</span>
-              )}
-              {errors.password?.type === "minLength" && (
-                <span className="text-red-600">The password must be at least 6 characters</span>
-              )}
-              {errors.password?.type === "maxLength" && (
-                <span className="text-red-600">The password must not exceed 20 characters</span>
-              )}
-              {errors.password?.type === "pattern" && (
-                <span className="text-red-600">
-                  The password must include one uppercase, one lowercase, one digit, and one special character
-                </span>
-              )}
-              <label className="label">
-                <button
-                  onClick={() => navigate("/reset-password")}
-                  className="label-text-alt link link-hover"
-                >
-                  Forgot password?
-                </button>
-              </label>
-            </div>
-            <div>
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                {...register("file", { required: true })}
-                className="file-input w-full max-w-xs"
-              />
-              {errors.file && <span className="text-red-600">Please upload an image file</span>}
-            </div>
-            <div className="form-control mt-6">
-              <button type="submit" className="btn btn-primary">
-                {loading ? (
-                  <TbFidgetSpinner className="animate-spin m-auto"></TbFidgetSpinner>
-                ) : (
-                  "Sign Up"
-                )}
-              </button>
-            </div>
-          </form>
-          <div>
-            <button onClick={handleGoogleLogin} className="flex btn">
-              <FaGoogle className="mr-2" />
-              {loading ? "Loading..." : "Login with Google"}
-            </button>
+    <div className="flex justify-center items-center pt-20 min-h-screen bg-base-200 p-6">
+      <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-md">
+        <h2 className="text-3xl font-bold text-center mb-6">Sign Up</h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-4">
+            <label className="block text-sm font-medium">Name</label>
+            <input
+              type="text"
+              {...register("name", { required: true })}
+              className="input input-bordered w-full mt-1"
+              placeholder="Enter your name"
+            />
+            {errors.name && <p className="text-red-500 text-sm">Name is required</p>}
           </div>
-        </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium">Email</label>
+            <input
+              type="email"
+              {...register("email", { required: true })}
+              className="input input-bordered w-full mt-1"
+              placeholder="Enter your email"
+            />
+            {errors.email && <p className="text-red-500 text-sm">Email is required</p>}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium">Password</label>
+            <input
+              type="password"
+              {...register("password", {
+                required: true,
+                minLength: 6,
+                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+              })}
+              className="input input-bordered w-full mt-1"
+              placeholder="Enter your password"
+            />
+            {errors.password && (
+              <p className="text-red-500 text-sm">Password must be at least 6 characters and contain one uppercase letter, one lowercase letter, one number, and one special character.</p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium">Profile Picture</label>
+            <input type="file" {...register("file", { required: true })} className="file-input w-full" />
+            {errors.file && <p className="text-red-500 text-sm">Please upload an image</p>}
+          </div>
+
+          <button
+            type="submit"
+            className="btn btn-primary w-full mt-4 flex items-center justify-center"
+          >
+            {loading ? <TbFidgetSpinner className="animate-spin" /> : "Sign Up"}
+          </button>
+        </form>
+
+        <div className="divider">OR</div>
+        <button
+          onClick={handleGoogleLogin}
+          className="btn btn-outline w-full flex items-center justify-center"
+        >
+          <FaGoogle className="mr-2" /> {loading ? "Loading..." : "Sign in with Google"}
+        </button>
       </div>
     </div>
   );
