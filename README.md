@@ -77,6 +77,14 @@ Visit the live site here: [Event Management Platform](https://simple-fiarbase-19
 
 6. **Error Page (404):**
    - A user-friendly error page with a button to redirect to the homepage.
+7. **user credential you need its:**
+.local.env file 
+   - VITE_apiKey=your-api-key
+VITE_authDomain=your-auth-domain
+VITE_projectId=your-project-id
+VITE_storageBucket=your-storage-bucket
+VITE_messagingSenderId=your-sender-id
+VITE_appId=your-app-id
 
 ---
 
