@@ -16,21 +16,29 @@ const Slider = () => {
             interval={3000} // time interval between slides (optional)
             showThumbs={false} // hide thumbnails
         >
-            <div>
+            <div className="relative">
                 <img src={img1} alt="Corporate Event" />
-                <p className="legend">Legend 1</p>
+                <div className="absolute bottom-10 left-10 text-white text-3xl font-bold bg-black bg-opacity-50 p-4 rounded-md">
+                    Corporate Event Management
+                </div>
             </div>
-            <div>
+            <div className="relative">
                 <img src={img2} alt="Event 2" />
-                <p className="legend">Legend 2</p>
+                <div className="absolute bottom-10 left-10 text-white text-3xl font-bold bg-black bg-opacity-50 p-4 rounded-md">
+                    Successful Conferences
+                </div>
             </div>
-            <div>
+            <div className="relative">
                 <img src={img3} alt="Event 3" />
-                <p className="legend">Legend 3</p>
+                <div className="absolute bottom-10 left-10 text-white text-3xl font-bold bg-black bg-opacity-50 p-4 rounded-md">
+                    Unforgettable Experiences
+                </div>
             </div>
-            <div>
+            <div className="relative">
                 <img src={img4} alt="Event 4" />
-                <p className="legend">Legend 4</p>
+                <div className="absolute bottom-10 left-10 text-white text-3xl font-bold bg-black bg-opacity-50 p-4 rounded-md">
+                    Tailored Event Solutions
+                </div>
             </div>
         </Carousel>
     );

@@ -2,12 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/* #root{
+    color: aliceblue;
+    background: rgb(10,8,42) ;
+background: linear-gradient(180deg, rgba(10,8,42,1) 5%, rgba(40,13,54,1) 41%, rgba(40,13,54,1) 55%, rgba(33,17,69,1) 100%)  !important;
+} */
 .Carousel-root {
     height: 500px !important;
 
 }
 .slide img{
+    position: relative !important;
+    z-index: calc(500px);
     height: 300px !important;
     object-fit: cover;
 }

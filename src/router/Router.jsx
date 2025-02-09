@@ -4,6 +4,7 @@ import Main from "../PageLayout/Main";
 import Login from "../page/login/Login";
 import Register from "../page/login/Register";
 import CreateEvent from "../page/createEvent/CreateEvent";
+import PrivateRoute from "../page/privateRoute/PrivateRoute";
 
 
 
@@ -25,7 +26,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:'/createEvent',
-                element:<CreateEvent></CreateEvent>
+                element:<PrivateRoute><CreateEvent></CreateEvent></PrivateRoute>
             },
         ]
     
