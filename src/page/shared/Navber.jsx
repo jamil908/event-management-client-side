@@ -29,7 +29,7 @@ const Navbar = () => {
 
       {/* Desktop Menu */}
       <div className=" md:flex items-center gap-6">
-        <Link to="/createEvent" className="text-lg font-medium text-red-600 hover:text-red-800">
+        <Link to="/createEvent" className="text-lg font-bold text-green-400 hover:text-red-800">
           Manage Events
         </Link>
       </div>

@@ -18,6 +18,7 @@ const CreateEvent = () => {
   // Static category options
   const categoryOptions = [
     { value: "birthday", label: "Birthday" },
+    { value: "sports", label: "Sports" },
     { value: "marriage", label: "Marriage" },
     { value: "concert", label: "Concert" },
     { value: "conference", label: "Conference" },
